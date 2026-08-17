@@ -1,0 +1,33 @@
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--icon-btn-bg);
+  border: 1.5px solid var(--glass-border);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.15s;
+  color: var(--text-secondary);
+}
+
+.iconBtn:hover {
+  background: var(--icon-btn-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.iconBtn.selected {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}

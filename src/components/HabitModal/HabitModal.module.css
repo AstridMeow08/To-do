@@ -1,0 +1,114 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+.open {
+  pointer-events: auto;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--glass-modal-bg);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid var(--glass-border);
+  border-radius: calc(var(--radius) + 4px);
+  padding: 32px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--glass-modal-shadow);
+  animation: slideUp 0.25s ease forwards;
+}
+
+@keyframes slideUp {
+  from { transform: scale(0.95) translateY(12px); opacity: 0; }
+  to   { transform: scale(1) translateY(0);        opacity: 1; }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.modalTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Form */
+.formGroup {
+  margin-bottom: 18px;
+}
+
+.timeGroup {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.timeGroup .formGroup {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.formInput {
+  width: 100%;
+  background: var(--form-input-bg);
+  border: 1px solid var(--form-input-border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  resize: vertical;
+}
+
+.formInput::placeholder {
+  color: var(--text-muted);
+}
+
+.formInput:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  background: var(--form-input-focus-bg);
+}
+
+textarea.formInput {
+  min-height: 80px;
+}
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 28px;
+}

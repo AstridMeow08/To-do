@@ -1,0 +1,12 @@
+.bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .bar {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,33 @@
+.wrapper {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 24px;
+}
+
+.icon {
+  width: 72px;
+  height: 72px;
+  background: var(--empty-icon-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+  color: var(--accent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--glass-shadow);
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
