@@ -91,7 +91,7 @@ export function useNotifications(habits: Habit[]) {
         // App is minimized/hidden - show native notification
         if ('Notification' in window && Notification.permission === 'granted') {
           const notification = new Notification(`Time for: ${habit.name}`, {
-            body: habit.description || 'Mark it as done to keep up your streak!',
+            body: habit.desc || 'Mark it as done to keep up your streak!',
             icon: '/vite.svg', // Fallback icon
           });
           

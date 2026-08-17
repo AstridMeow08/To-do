@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Habit } from '../../types/habit';
 import { COLORS } from '../../constants/colors';
 import { ICON_PATHS } from '../../constants/icons';
@@ -41,8 +40,8 @@ export function ReminderModal({ habit, onClose, onComplete }: ReminderModalProps
         
         <div className={styles.content}>
           <h3 className={styles.habitName}>{habit.name}</h3>
-          {habit.description && (
-            <p className={styles.habitDescription}>{habit.description}</p>
+          {habit.desc && (
+            <p className={styles.habitDescription}>{habit.desc}</p>
           )}
           <div className={styles.timeLabel}>
             Scheduled for {habit.timeFrom}
