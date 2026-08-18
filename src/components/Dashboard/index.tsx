@@ -8,6 +8,7 @@ import {
   formatShortDate,
   formatTime12Hour,
   MONTH_NAMES,
+  isHabitApplicableOnDate,
 } from '../../utils/dateUtils';
 import { COLORS } from '../../constants/colors';
 import { ICON_PATHS } from '../../constants/icons';
@@ -105,7 +106,7 @@ export function Dashboard({ habits }: Props) {
   const timelineHabits = useMemo(() => {
     if (!selectedDate) return [];
     return [...habits]
-      .filter((h) => h.completions[selectedDate])
+      .filter((h) => isHabitApplicableOnDate(h, selectedDate))
       .sort((a, b) => (a.timeFrom || '23:59').localeCompare(b.timeFrom || '23:59'));
   }, [habits, selectedDate]);
 
@@ -414,18 +415,23 @@ export function Dashboard({ habits }: Props) {
 
               <div className={styles.timelineList}>
                 {timelineHabits.length === 0 ? (
-                  <div className={styles.timelineEmpty}>No habits completed on this day.</div>
+                  <div className={styles.timelineEmpty}>No habits assigned to this day.</div>
                 ) : (
                   timelineHabits.map((habit) => {
                     const color = COLORS[habit.colorIdx] ?? COLORS[0];
                     const iconPath = ICON_PATHS[habit.iconIdx] ?? ICON_PATHS[0];
+                    const isDone = !!habit.completions[selectedDate!];
 
                     const formattedTime = (habit.timeFrom || habit.timeTo)
                       ? [formatTime12Hour(habit.timeFrom), formatTime12Hour(habit.timeTo)].filter(Boolean).join(' – ')
                       : null;
 
                     return (
-                      <div key={habit.id} className={styles.timelineItem}>
+                      <div 
+                        key={habit.id} 
+                        className={styles.timelineItem}
+                        style={!isDone ? { opacity: 0.6, filter: 'grayscale(0.8)' } : {}}
+                      >
                         <div className={styles.timelineIcon} style={{ background: color.bg }}>
                           <svg
                             width="16"
@@ -487,18 +493,23 @@ export function Dashboard({ habits }: Props) {
 
               <div className={styles.timelineList}>
                 {timelineHabits.length === 0 ? (
-                  <div className={styles.timelineEmpty}>No habits completed on this day.</div>
+                  <div className={styles.timelineEmpty}>No habits assigned to this day.</div>
                 ) : (
                   timelineHabits.map((habit) => {
                     const color = COLORS[habit.colorIdx] ?? COLORS[0];
                     const iconPath = ICON_PATHS[habit.iconIdx] ?? ICON_PATHS[0];
+                    const isDone = !!habit.completions[selectedDate!];
 
                     const formattedTime = (habit.timeFrom || habit.timeTo)
                       ? [formatTime12Hour(habit.timeFrom), formatTime12Hour(habit.timeTo)].filter(Boolean).join(' – ')
                       : null;
 
                     return (
-                      <div key={habit.id} className={styles.timelineItem}>
+                      <div 
+                        key={habit.id} 
+                        className={styles.timelineItem}
+                        style={!isDone ? { opacity: 0.6, filter: 'grayscale(0.8)' } : {}}
+                      >
                         <div className={styles.timelineIcon} style={{ background: color.bg }}>
                           <svg
                             width="16"

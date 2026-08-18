@@ -15,6 +15,7 @@ import { Dashboard } from './components/Dashboard';
 import { DataModal } from './components/DataModal';
 import { Toast } from './components/Toast';
 import { UpdatePrompt } from './components/UpdatePrompt';
+import { todayKey, isHabitApplicableOnDate } from './utils/dateUtils';
 import './App.css';
 
 type View = 'habits' | 'dashboard';
@@ -37,6 +38,9 @@ export default function App() {
     onNeedRefresh() { setUpdateVisible(true); },
     onOfflineReady() { showToast('App ready to work offline ✓', 'info'); },
   });
+
+  const today = todayKey();
+  const todayHabits = habits.filter(h => isHabitApplicableOnDate(h, today));
 
   const openAdd = useCallback(() => {
     setEditing(null);
@@ -156,9 +160,9 @@ export default function App() {
       {/* ── Views ── */}
       {view === 'habits' && (
         <>
-          <SummaryBar habits={habits} />
+          <SummaryBar habits={todayHabits} />
           <HabitsGrid
-            habits={habits}
+            habits={todayHabits}
             onToggle={handleToggle}
             onEdit={openEdit}
             onDelete={handleDeleteRequest}
