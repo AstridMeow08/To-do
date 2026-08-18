@@ -4,6 +4,7 @@ import type { Habit, HabitFormData } from '../../types/habit';
 import { IconPicker } from '../IconPicker';
 import { ColorPicker } from '../ColorPicker';
 import { TimePicker } from '../TimePicker';
+import { todayKey } from '../../utils/dateUtils';
 import styles from './HabitModal.module.css';
 
 interface HabitModalProps {
@@ -13,7 +14,10 @@ interface HabitModalProps {
   onSave: (data: HabitFormData) => void;
 }
 
-const DEFAULT_FORM: HabitFormData = { name: '', desc: '', colorIdx: 0, iconIdx: 0, timeFrom: '', timeTo: '' };
+const DEFAULT_FORM: HabitFormData = { 
+  name: '', desc: '', colorIdx: 0, iconIdx: 0, timeFrom: '', timeTo: '', 
+  startDate: todayKey(), frequency: 'everyday' 
+};
 
 export function HabitModal({ open, editing, onClose, onSave }: HabitModalProps) {
   const [form, setForm] = useState<HabitFormData>(DEFAULT_FORM);
@@ -23,8 +27,12 @@ export function HabitModal({ open, editing, onClose, onSave }: HabitModalProps) 
   useEffect(() => {
     if (open) {
       setForm(editing
-        ? { name: editing.name, desc: editing.desc, colorIdx: editing.colorIdx, iconIdx: editing.iconIdx, timeFrom: editing.timeFrom || '', timeTo: editing.timeTo || '' }
-        : DEFAULT_FORM
+        ? { 
+            name: editing.name, desc: editing.desc, colorIdx: editing.colorIdx, 
+            iconIdx: editing.iconIdx, timeFrom: editing.timeFrom || '', timeTo: editing.timeTo || '',
+            startDate: editing.startDate || todayKey(), frequency: editing.frequency || 'everyday'
+          }
+        : { ...DEFAULT_FORM, startDate: todayKey() }
       );
       setTimeout(() => nameRef.current?.focus(), 50);
     }
@@ -102,6 +110,34 @@ export function HabitModal({ open, editing, onClose, onSave }: HabitModalProps) 
               timeTo={form.timeTo}
               onChange={({ timeFrom, timeTo }) => setForm((f) => ({ ...f, timeFrom, timeTo }))}
             />
+          </div>
+
+          {/* Start Date */}
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel} htmlFor="habit-startDate">Start Date</label>
+            <input
+              id="habit-startDate"
+              className={styles.formInput}
+              type="date"
+              required
+              value={form.startDate || ''}
+              onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}
+            />
+          </div>
+
+          {/* Frequency */}
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel} htmlFor="habit-frequency">Frequency</label>
+            <select
+              id="habit-frequency"
+              className={styles.formInput}
+              value={form.frequency || 'everyday'}
+              onChange={(e) => setForm((f) => ({ ...f, frequency: e.target.value as any }))}
+            >
+              <option value="everyday">Every Day</option>
+              <option value="weekdays">Weekdays (Mon-Fri)</option>
+              <option value="weekends">Weekends (Sat-Sun)</option>
+            </select>
           </div>
 
           {/* Icon picker */}

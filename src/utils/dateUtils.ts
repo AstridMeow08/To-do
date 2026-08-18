@@ -1,3 +1,5 @@
+import type { Habit } from '../types/habit';
+
 /** Returns today's date key as "YYYY-MM-DD" */
 export function todayKey(): string {
   const d = new Date();
@@ -224,3 +226,27 @@ export function uid(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
+export function isHabitApplicableOnDate(habit: Habit, dateKey: string): boolean {
+  // If habit has a start date, it's not applicable before that date
+  if (habit.startDate && dateKey < habit.startDate) {
+    return false;
+  }
+
+  // If no frequency specified, assume everyday
+  const freq = habit.frequency || 'everyday';
+  if (freq === 'everyday') return true;
+
+  // For weekdays/weekends, check the day of the week
+  const dateObj = new Date(dateKey + 'T12:00:00');
+  const dayOfWeek = dateObj.getDay(); // 0 = Sun, 6 = Sat
+  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+  if (freq === 'weekdays') {
+    return !isWeekend;
+  }
+  if (freq === 'weekends') {
+    return isWeekend;
+  }
+
+  return true;
+}
