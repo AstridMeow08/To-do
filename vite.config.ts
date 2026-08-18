@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png', 'icon-maskable.png'],
+      includeAssets: ['icon.png', 'logo1.png'],
       manifest: {
         name: 'Habit Tracker',
         short_name: 'Habits',
@@ -21,18 +21,13 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: 'icon-192.png',
-            sizes: '192x192',
+            src: 'icon.png',
+            sizes: '192x192 512x512',
             type: 'image/png',
           },
           {
-            src: 'icon-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: 'icon-maskable.png',
-            sizes: '512x512',
+            src: 'icon.png',
+            sizes: '192x192 512x512',
             type: 'image/png',
             purpose: 'maskable',
           },

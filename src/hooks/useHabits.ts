@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import type { Habit, HabitFormData } from '../types/habit';
 import { todayKey, uid } from '../utils/dateUtils';
+import { mergeHabits } from '../utils/dataManager';
 
 const STORAGE_KEY = 'habitTrackerData_v2';
 
@@ -66,5 +67,17 @@ export function useHabits() {
     [habits, update]
   );
 
-  return { habits, addHabit, updateHabit, deleteHabit, toggleHabit };
+  const importHabits = useCallback(
+    (incoming: Habit[], mode: 'merge' | 'replace') => {
+      if (mode === 'replace') {
+        update(incoming);
+      } else {
+        const merged = mergeHabits(habits, incoming);
+        update(merged);
+      }
+    },
+    [habits, update]
+  );
+
+  return { habits, addHabit, updateHabit, deleteHabit, toggleHabit, importHabits };
 }

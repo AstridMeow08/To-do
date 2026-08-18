@@ -10,7 +10,9 @@ import { SummaryBar } from './components/SummaryBar';
 import { HabitsGrid } from './components/HabitsGrid';
 import { HabitModal } from './components/HabitModal';
 import { ReminderModal } from './components/ReminderModal';
+import { ConfirmModal } from './components/ConfirmModal';
 import { Dashboard } from './components/Dashboard';
+import { DataModal } from './components/DataModal';
 import { Toast } from './components/Toast';
 import { UpdatePrompt } from './components/UpdatePrompt';
 import './App.css';
@@ -18,20 +20,22 @@ import './App.css';
 type View = 'habits' | 'dashboard';
 
 export default function App() {
-  const { habits, addHabit, updateHabit, deleteHabit, toggleHabit } = useHabits();
-  const { message, visible, showToast } = useToast();
+  const { habits, addHabit, updateHabit, deleteHabit, toggleHabit, importHabits } = useHabits();
+  const { message, type, visible, showToast } = useToast();
   const { theme, toggleTheme } = useTheme();
   const { activeReminder, dismissReminder } = useNotifications(habits);
 
   const [view, setView] = useState<View>('habits');
   const [modalOpen, setModalOpen] = useState(false);
+  const [dataModalOpen, setDataModalOpen] = useState(false);
   const [editing, setEditing] = useState<Habit | null>(null);
+  const [habitToDelete, setHabitToDelete] = useState<Habit | null>(null);
   const [updateVisible, setUpdateVisible] = useState(false);
 
   // PWA service worker registration & update handling
   const { updateServiceWorker } = useRegisterSW({
     onNeedRefresh() { setUpdateVisible(true); },
-    onOfflineReady() { showToast('App ready to work offline ✓'); },
+    onOfflineReady() { showToast('App ready to work offline ✓', 'info'); },
   });
 
   const openAdd = useCallback(() => {
@@ -53,10 +57,10 @@ export default function App() {
     (data: HabitFormData) => {
       if (editing) {
         updateHabit(editing.id, data);
-        showToast('Habit updated');
+        showToast('Habit updated successfully', 'success');
       } else {
         addHabit(data);
-        showToast('Habit added');
+        showToast('Habit added successfully', 'success');
       }
       closeModal();
     },
@@ -69,29 +73,60 @@ export default function App() {
       if (!habit) return;
       toggleHabit(id);
       const wasCompleted = habit.completions[new Date().toISOString().slice(0, 10)];
-      showToast(wasCompleted ? 'Habit unmarked' : 'Great work! Habit completed');
+      if (wasCompleted) {
+        showToast(`Unmarked: ${habit.name}`, 'info');
+      } else {
+        showToast(`Great job! Completed: ${habit.name} 🔥`, 'success');
+      }
     },
     [habits, toggleHabit, showToast]
   );
 
-  const handleDelete = useCallback(
+  const handleDeleteRequest = useCallback(
     (id: string) => {
-      if (!window.confirm('Remove this habit? All progress will be lost.')) return;
-      deleteHabit(id);
-      showToast('Habit removed');
+      const habit = habits.find((h) => h.id === id);
+      if (habit) {
+        setHabitToDelete(habit);
+      }
     },
-    [deleteHabit, showToast]
+    [habits]
   );
+
+  const handleConfirmDelete = useCallback(() => {
+    if (habitToDelete) {
+      deleteHabit(habitToDelete.id);
+      showToast(`Removed habit "${habitToDelete.name}"`, 'info');
+      setHabitToDelete(null);
+    }
+  }, [habitToDelete, deleteHabit, showToast]);
 
   const handleCompleteReminder = (habitId: string) => {
     toggleHabit(habitId);
     dismissReminder();
-    showToast('Habit completed');
+    showToast('Habit marked as completed! 🎯', 'success');
   };
+
+  const handleImportData = useCallback(
+    (importedHabits: Habit[], mode: 'merge' | 'replace') => {
+      importHabits(importedHabits, mode);
+      showToast(
+        mode === 'replace'
+          ? `Successfully replaced with ${importedHabits.length} habits`
+          : `Successfully merged ${importedHabits.length} habits`,
+        'success'
+      );
+    },
+    [importHabits, showToast]
+  );
 
   return (
     <div className="shell">
-      <Header onAdd={openAdd} theme={theme} onToggleTheme={toggleTheme} />
+      <Header
+        onAdd={openAdd}
+        onOpenData={() => setDataModalOpen(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
       {/* ── Navigation Tabs ── */}
       <nav className="nav-tabs" aria-label="Main navigation">
@@ -126,7 +161,7 @@ export default function App() {
             habits={habits}
             onToggle={handleToggle}
             onEdit={openEdit}
-            onDelete={handleDelete}
+            onDelete={handleDeleteRequest}
             onAdd={openAdd}
           />
         </>
@@ -145,7 +180,23 @@ export default function App() {
         onClose={dismissReminder}
         onComplete={handleCompleteReminder}
       />
-      <Toast message={message} visible={visible} />
+      <DataModal
+        open={dataModalOpen}
+        habits={habits}
+        onClose={() => setDataModalOpen(false)}
+        onImport={handleImportData}
+      />
+      <ConfirmModal
+        open={!!habitToDelete}
+        title="Remove Habit?"
+        message={`Are you sure you want to remove "${habitToDelete?.name || ''}"? All recorded streaks and completion history for this habit will be permanently deleted.`}
+        confirmText="Delete Habit"
+        cancelText="Keep Habit"
+        variant="danger"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setHabitToDelete(null)}
+      />
+      <Toast message={message} type={type} visible={visible} />
       <UpdatePrompt
         visible={updateVisible}
         onUpdate={() => { updateServiceWorker(true); setUpdateVisible(false); }}
