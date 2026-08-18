@@ -1,4 +1,5 @@
 import type { Habit } from '../../types/habit';
+import { formatTime12Hour } from '../../utils/dateUtils';
 import { COLORS } from '../../constants/colors';
 import { ICON_PATHS } from '../../constants/icons';
 import styles from './ReminderModal.module.css';
@@ -44,7 +45,7 @@ export function ReminderModal({ habit, onClose, onComplete }: ReminderModalProps
             <p className={styles.habitDescription}>{habit.desc}</p>
           )}
           <div className={styles.timeLabel}>
-            Scheduled for {habit.timeFrom}
+            Scheduled for {formatTime12Hour(habit.timeFrom)}
           </div>
         </div>
 

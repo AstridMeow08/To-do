@@ -3,18 +3,19 @@ import { formatDate } from '../../utils/dateUtils';
 
 interface HeaderProps {
   onAdd: () => void;
+  onOpenData: () => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
 }
 
-export function Header({ onAdd, theme, onToggleTheme }: HeaderProps) {
+export function Header({ onAdd, onOpenData, theme, onToggleTheme }: HeaderProps) {
   const isDark = theme === 'dark';
 
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
         <div className={styles.logoIcon}>
-          <img src="/logo.jpg" alt="Habits Logo" className={styles.logoImage} />
+          <img src="/logo1.png" alt="Habits Logo" className={styles.logoImage} />
         </div>
         <div>
           <div className={styles.logoText}>Habit Tracker</div>
@@ -23,6 +24,20 @@ export function Header({ onAdd, theme, onToggleTheme }: HeaderProps) {
       </div>
 
       <div className={styles.headerRight}>
+        {/* Data Import/Export */}
+        <button
+          className="theme-toggle"
+          onClick={onOpenData}
+          aria-label="Backup & Data Export"
+          title="Backup & Data Export"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+        </button>
+
         {/* Theme Toggle */}
         <button
           className="theme-toggle"

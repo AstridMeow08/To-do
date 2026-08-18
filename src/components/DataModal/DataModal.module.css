@@ -1,0 +1,248 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+.open {
+  pointer-events: auto;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--glass-modal-bg);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid var(--glass-border);
+  border-radius: calc(var(--radius) + 4px);
+  padding: 30px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: var(--glass-modal-shadow);
+  animation: slideUp 0.25s ease forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+@keyframes slideUp {
+  from { transform: scale(0.95) translateY(12px); opacity: 0; }
+  to   { transform: scale(1) translateY(0);        opacity: 1; }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--form-input-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+}
+
+.sectionTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionDesc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.exportBtnGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.individualExportRow {
+  display: flex;
+  gap: 8px;
+}
+
+.individualExportRow button {
+  flex: 1;
+  font-size: 0.78rem;
+  padding: 8px 12px;
+  justify-content: center;
+}
+
+/* Dropzone */
+.dropzone {
+  border: 2px dashed var(--form-input-border);
+  border-radius: var(--radius-sm);
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--glass-bg);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropzone:hover,
+.dropzone.dragOver {
+  border-color: var(--accent);
+  background: var(--glass-hover);
+  transform: scale(1.01);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.dropzoneIcon {
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropzoneText {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dropzoneSub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Import Preview Card */
+.previewCard {
+  background: var(--glass-modal-bg);
+  border: 1px solid var(--accent-glow);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.2s ease;
+}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fileName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.formatBadge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.previewStats {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 14px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.statItem strong {
+  color: var(--accent);
+}
+
+.importActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.importActions button {
+  flex: 1;
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  justify-content: center;
+  min-width: 130px;
+}
+
+.errorBox {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 480px) {
+  .backdrop {
+    padding: 12px;
+    align-items: flex-end;
+  }
+  .modal {
+    padding: 22px 18px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    max-height: 88vh;
+  }
+  .individualExportRow {
+    flex-direction: column;
+  }
+  .importActions {
+    flex-direction: column;
+  }
+}

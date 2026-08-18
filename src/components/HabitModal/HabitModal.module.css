@@ -29,9 +29,23 @@
   border-radius: calc(var(--radius) + 4px);
   padding: 32px;
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
+  max-height: 92vh;
+  overflow-y: auto;
   box-shadow: var(--glass-modal-shadow);
   animation: slideUp 0.25s ease forwards;
+}
+
+@media (max-width: 480px) {
+  .backdrop {
+    padding: 12px;
+    align-items: flex-end;
+  }
+  .modal {
+    padding: 22px 18px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    max-height: 88vh;
+  }
 }
 
 @keyframes slideUp {

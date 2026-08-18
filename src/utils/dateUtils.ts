@@ -119,6 +119,107 @@ export function formatDate(d: Date): string {
   });
 }
 
+export const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+export const SHORT_MONTH_NAMES = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
+
+export interface MonthDayCell {
+  key: string;       // "YYYY-MM-DD"
+  date: Date;
+  dayNumber: number; // 1..31
+  dayOfWeek: number; // 0=Sun..6=Sat
+  isCurrentMonth: boolean;
+  isToday: boolean;
+  isFuture: boolean;
+}
+
+/**
+ * Builds a 7-column calendar matrix for the specified year and month (0-indexed).
+ * Includes padding days from previous and next months to form complete weeks.
+ */
+export function buildMonthGrid(year: number, month: number): MonthDayCell[] {
+  const cells: MonthDayCell[] = [];
+  const todayKey_ = todayKey();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // First day of target month
+  const firstDay = new Date(year, month, 1);
+  const firstDayOfWeek = firstDay.getDay(); // 0 (Sun) to 6 (Sat)
+
+  // Start date (backed up to previous Sunday)
+  const cursor = new Date(year, month, 1 - firstDayOfWeek);
+
+  // Last day of target month
+  const lastDay = new Date(year, month + 1, 0);
+  const totalDaysInMonth = lastDay.getDate();
+
+  // Total slots needed: firstDayOfWeek + totalDaysInMonth, rounded up to next multiple of 7
+  const slotsNeeded = Math.ceil((firstDayOfWeek + totalDaysInMonth) / 7) * 7;
+
+  for (let i = 0; i < slotsNeeded; i++) {
+    const key = formatKey(cursor);
+    const isCurrentMonth = cursor.getMonth() === month && cursor.getFullYear() === year;
+    const isToday = key === todayKey_;
+    const isFuture = cursor > today;
+
+    cells.push({
+      key,
+      date: new Date(cursor),
+      dayNumber: cursor.getDate(),
+      dayOfWeek: cursor.getDay(),
+      isCurrentMonth,
+      isToday,
+      isFuture,
+    });
+
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  return cells;
+}
+
+/** Converts "HH:MM" (24h) to "h:mm AM/PM" */
+export function formatTime12Hour(timeStr?: string): string {
+  if (!timeStr) return '';
+  const parts = timeStr.split(':');
+  if (parts.length < 2) return timeStr;
+  const h = parseInt(parts[0], 10);
+  const m = parts[1];
+  if (isNaN(h)) return timeStr;
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  return `${h12}:${m} ${ampm}`;
+}
+
+/** Parses "HH:MM" (24h) into 12h components */
+export function parseTimeTo12Hour(timeStr?: string): { hour: number; minute: number; ampm: 'AM' | 'PM' } | null {
+  if (!timeStr) return null;
+  const parts = timeStr.split(':');
+  if (parts.length < 2) return null;
+  const h = parseInt(parts[0], 10);
+  const m = parseInt(parts[1], 10);
+  if (isNaN(h) || isNaN(m)) return null;
+  const ampm: 'AM' | 'PM' = h >= 12 ? 'PM' : 'AM';
+  const hour = h % 12 || 12;
+  return { hour, minute: m, ampm };
+}
+
+/** Converts 12h components into "HH:MM" (24h) */
+export function to24HourString(hour12: number, minute: number, ampm: 'AM' | 'PM'): string {
+  let h = hour12 % 12;
+  if (ampm === 'PM') h += 12;
+  const hh = String(h).padStart(2, '0');
+  const mm = String(minute).padStart(2, '0');
+  return `${hh}:${mm}`;
+}
+
 export function uid(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }

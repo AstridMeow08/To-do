@@ -77,74 +77,74 @@
 }
 
 /* ══════════════════════════════════════════
-   DARK THEME
+   DARK THEME (ChatGPT UI Palette)
 ══════════════════════════════════════════ */
 [data-theme="dark"] {
   color-scheme: dark;
 
-  /* Background */
-  --bg-from: #0f0c29;
-  --bg-mid:  #1a1040;
-  --bg-to:   #24243e;
+  /* Background - Pure ChatGPT Neutral Charcoal */
+  --bg-from: #212121;
+  --bg-mid:  #171717;
+  --bg-to:   #121212;
 
-  /* Glass surfaces */
-  --glass-bg:         rgba(25, 25, 35, 0.45);
-  --glass-border:     rgba(255, 255, 255, 0.15);
-  --glass-hover:      rgba(25, 25, 35, 0.65);
-  --glass-shadow:     0 8px 32px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(255, 255, 255, 0.08) inset;
-  --glass-modal-bg:   rgba(20, 12, 48, 0.85);
-  --glass-modal-shadow: 0 24px 80px rgba(0, 0, 0, 0.55), 0 2px 16px rgba(0, 0, 0, 0.30), 0 1px 2px rgba(255, 255, 255, 0.08) inset;
+  /* Surfaces - ChatGPT Style Cards & Modals */
+  --glass-bg:         rgba(47, 47, 47, 0.65);
+  --glass-border:     rgba(255, 255, 255, 0.10);
+  --glass-hover:      rgba(60, 60, 60, 0.85);
+  --glass-shadow:     0 8px 28px rgba(0, 0, 0, 0.40), 0 1px 2px rgba(255, 255, 255, 0.05) inset;
+  --glass-modal-bg:   rgba(33, 33, 33, 0.95);
+  --glass-modal-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 2px 12px rgba(0, 0, 0, 0.40), 0 1px 2px rgba(255, 255, 255, 0.06) inset;
 
   /* Backdrop */
-  --backdrop-bg: rgba(5, 3, 18, 0.70);
+  --backdrop-bg: rgba(0, 0, 0, 0.70);
 
-  /* Accent */
-  --accent:       #10b981;
-  --accent-light: #34d399;
-  --accent-glow:  rgba(52, 211, 153, 0.35);
+  /* Accent - ChatGPT Signature Emerald */
+  --accent:       #10a37f;
+  --accent-light: #12b78d;
+  --accent-glow:  rgba(16, 163, 127, 0.28);
 
   /* Success */
-  --success:      #34d399;
-  --success-glow: rgba(52, 211, 153, 0.30);
+  --success:      #10a37f;
+  --success-glow: rgba(16, 163, 127, 0.25);
 
   /* Danger */
-  --danger:       #f87171;
+  --danger:       #ef4444;
 
-  /* Text */
-  --text-primary:   #f0eeff;
-  --text-secondary: rgba(240, 238, 255, 0.55);
-  --text-muted:     rgba(240, 238, 255, 0.35);
+  /* Text - Crisp Off-White & Neutral Grays */
+  --text-primary:   #ececec;
+  --text-secondary: rgba(255, 255, 255, 0.70);
+  --text-muted:     rgba(255, 255, 255, 0.45);
 
-  /* Component-specific */
+  /* Component-specific surfaces */
   --header-border:    rgba(255, 255, 255, 0.10);
-  --dot-bg:           rgba(255, 255, 255, 0.05);
-  --dot-border:       rgba(255, 255, 255, 0.07);
-  --check-btn-bg:     rgba(255, 255, 255, 0.05);
+  --dot-bg:           rgba(255, 255, 255, 0.06);
+  --dot-border:       rgba(255, 255, 255, 0.10);
+  --check-btn-bg:     rgba(255, 255, 255, 0.07);
   --check-btn-shadow: none;
-  --icon-btn-bg:      rgba(255, 255, 255, 0.05);
-  --icon-btn-hover:   rgba(255, 255, 255, 0.11);
-  --form-input-bg:    rgba(255, 255, 255, 0.06);
-  --form-input-focus-bg: rgba(255, 255, 255, 0.10);
-  --form-input-border: rgba(255, 255, 255, 0.13);
-  --toast-bg:         rgba(22, 12, 52, 0.92);
-  --toast-border:     rgba(255, 255, 255, 0.12);
-  --toast-shadow:     0 8px 32px rgba(0, 0, 0, 0.40);
-  --pill-bg:          rgba(22, 12, 52, 0.92);
-  --pill-border:      rgba(255, 255, 255, 0.12);
-  --pill-shadow:      0 8px 32px rgba(0, 0, 0, 0.40);
-  --dismiss-color:    rgba(240, 238, 255, 0.40);
-  --dismiss-hover:    #f0eeff;
-  --empty-icon-bg:    rgba(255, 255, 255, 0.05);
-  --scrollbar-thumb:  rgba(255, 255, 255, 0.14);
-  --orb-1: rgba(16, 185, 129, 0.35);
-  --orb-2: rgba(52, 211, 153, 0.25);
+  --icon-btn-bg:      rgba(255, 255, 255, 0.07);
+  --icon-btn-hover:   rgba(255, 255, 255, 0.14);
+  --form-input-bg:    rgba(47, 47, 47, 0.80);
+  --form-input-focus-bg: #2f2f2f;
+  --form-input-border: rgba(255, 255, 255, 0.15);
+  --toast-bg:         rgba(33, 33, 33, 0.96);
+  --toast-border:     rgba(255, 255, 255, 0.14);
+  --toast-shadow:     0 8px 32px rgba(0, 0, 0, 0.50);
+  --pill-bg:          rgba(33, 33, 33, 0.96);
+  --pill-border:      rgba(255, 255, 255, 0.14);
+  --pill-shadow:      0 8px 32px rgba(0, 0, 0, 0.50);
+  --dismiss-color:    rgba(255, 255, 255, 0.45);
+  --dismiss-hover:    #ececec;
+  --empty-icon-bg:    rgba(255, 255, 255, 0.06);
+  --scrollbar-thumb:  rgba(255, 255, 255, 0.18);
+  --orb-1: rgba(255, 255, 255, 0.03);
+  --orb-2: rgba(16, 163, 127, 0.04);
 
-  /* Heatmap shades — dark */
+  /* Heatmap shades — ChatGPT emerald gradient */
   --heat-0: rgba(255, 255, 255, 0.06);
-  --heat-1: rgba(52, 211, 153, 0.28);
-  --heat-2: rgba(52, 211, 153, 0.50);
-  --heat-3: rgba(52, 211, 153, 0.72);
-  --heat-4: rgba(16, 185, 129, 0.92);
+  --heat-1: rgba(16, 163, 127, 0.28);
+  --heat-2: rgba(16, 163, 127, 0.50);
+  --heat-3: rgba(16, 163, 127, 0.74);
+  --heat-4: #10a37f;
 }
 
 /* ══════════════════════════════════════════
@@ -224,6 +224,15 @@ body::after {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px 60px;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 60px);
+}
+
+@media (max-width: 600px) {
+  .shell {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -381,5 +390,18 @@ body::after {
 
 .nav-tab:hover svg {
   opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .nav-tabs {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .nav-tab {
+    flex: 1;
+    justify-content: center;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+  }
 }
 

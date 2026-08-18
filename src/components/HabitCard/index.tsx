@@ -1,5 +1,5 @@
 import type { Habit } from '../../types/habit';
-import { todayKey, weekKeys, getStreak } from '../../utils/dateUtils';
+import { todayKey, weekKeys, getStreak, formatTime12Hour } from '../../utils/dateUtils';
 import { COLORS } from '../../constants/colors';
 import { ICON_PATHS } from '../../constants/icons';
 import styles from './HabitCard.module.css';
@@ -20,16 +20,9 @@ export function HabitCard({ habit, onToggle, onEdit, onDelete }: HabitCardProps)
   const iconPaths = ICON_PATHS[habit.iconIdx % ICON_PATHS.length];
   const isDone = !!habit.completions[today];
   const streak = getStreak(habit.completions);
-  const formatTime = (timeStr?: string) => {
-    if (!timeStr) return null;
-    const [h, m] = timeStr.split(':');
-    const d = new Date();
-    d.setHours(parseInt(h, 10), parseInt(m, 10));
-    return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  };
 
   const formattedTime = (habit.timeFrom || habit.timeTo) ? (
-    [formatTime(habit.timeFrom), formatTime(habit.timeTo)].filter(Boolean).join(' - ')
+    [formatTime12Hour(habit.timeFrom), formatTime12Hour(habit.timeTo)].filter(Boolean).join(' – ')
   ) : null;
 
   return (

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import type { Habit, HabitFormData } from '../../types/habit';
 import { IconPicker } from '../IconPicker';
 import { ColorPicker } from '../ColorPicker';
+import { TimePicker } from '../TimePicker';
 import styles from './HabitModal.module.css';
 
 interface HabitModalProps {
@@ -93,28 +94,14 @@ export function HabitModal({ open, editing, onClose, onSave }: HabitModalProps) 
             />
           </div>
 
-          {/* Time Range */}
-          <div className={styles.timeGroup}>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="habit-time-from">From Time</label>
-              <input
-                id="habit-time-from"
-                className={styles.formInput}
-                type="time"
-                value={form.timeFrom || ''}
-                onChange={(e) => setForm((f) => ({ ...f, timeFrom: e.target.value }))}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="habit-time-to">To Time</label>
-              <input
-                id="habit-time-to"
-                className={styles.formInput}
-                type="time"
-                value={form.timeTo || ''}
-                onChange={(e) => setForm((f) => ({ ...f, timeTo: e.target.value }))}
-              />
-            </div>
+          {/* Time Picker */}
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Schedule & Reminder (optional)</label>
+            <TimePicker
+              timeFrom={form.timeFrom}
+              timeTo={form.timeTo}
+              onChange={({ timeFrom, timeTo }) => setForm((f) => ({ ...f, timeFrom, timeTo }))}
+            />
           </div>
 
           {/* Icon picker */}
