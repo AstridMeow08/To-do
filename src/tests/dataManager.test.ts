@@ -3,8 +3,6 @@ import {
   parseJsonContent,
   parseCsvContent,
   mergeHabits,
-  exportToJson,
-  exportToCsv,
 } from '../utils/dataManager';
 import type { Habit } from '../types/habit';
 
