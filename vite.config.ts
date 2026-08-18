@@ -75,4 +75,15 @@ export default defineConfig({
       },
     }),
   ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/tests/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'json-summary'],
+      include: ['src/utils/**', 'src/hooks/**'],
+      exclude: ['src/tests/**'],
+    },
+  },
 })
