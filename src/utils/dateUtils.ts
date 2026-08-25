@@ -176,7 +176,7 @@ export function buildMonthGrid(year: number, month: number): MonthDayCell[] {
       isToday,
       isFuture,
     });
-
+    // 
     cursor.setDate(cursor.getDate() + 1);
   }
 
