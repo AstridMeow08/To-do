@@ -162,8 +162,8 @@ export function buildMonthGrid(year: number, month: number): MonthDayCell[] {
   const lastDay = new Date(year, month + 1, 0);
   const totalDaysInMonth = lastDay.getDate();
 
-  // Total slots needed: firstDayOfWeek + totalDaysInMonth, rounded up to next multiple of 7
-  const slotsNeeded = Math.ceil((firstDayOfWeek + totalDaysInMonth) / 7) * 7;
+  // Always render exactly 6 weeks (42 days) so the calendar height never jumps between 5 and 6 rows
+  const slotsNeeded = 42;
 
   for (let i = 0; i < slotsNeeded; i++) {
     const key = formatKey(cursor);
