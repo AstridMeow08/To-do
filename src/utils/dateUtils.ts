@@ -88,7 +88,7 @@ export interface MonthLabel {
 export function buildMonthLabels(cells: DayCell[]): MonthLabel[] {
   const labels: MonthLabel[] = [];
   const seen = new Set<number>();
-  const NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   for (const cell of cells) {
     if (cell.dayOfWeek === 0 && !seen.has(cell.weekIndex)) {
       const monthKey = cell.date.getFullYear() * 12 + cell.month;
