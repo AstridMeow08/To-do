@@ -1,0 +1,259 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.statTile {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.statLabel {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.statSub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.graphCard {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Control Bar ── */
+.controlBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.selectorGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navArrowBtn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navArrowBtn:hover {
+  background: var(--glass-hover);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.selectDropdown {
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.2s ease;
+}
+
+.selectDropdown:focus,
+.selectDropdown:hover {
+  border-color: var(--accent);
+  background: var(--glass-hover);
+}
+
+.todayBtn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.todayBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px var(--accent-glow);
+}
+
+/* ── Calendar Grid ── */
+.monthCalendarHeader {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.monthDayHeader {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.monthCalendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  /* Maintain square cells roughly */
+  grid-auto-rows: minmax(70px, 1fr);
+}
+
+.monthCell {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--dot-border);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+
+.monthCellDayNum {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  opacity: 0.8;
+}
+
+.monthCellCount {
+  margin-top: auto;
+  align-self: flex-end;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-glow);
+  padding: 2px 6px;
+  border-radius: 12px;
+}
+
+.otherMonth {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.futureDay {
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.5;
+}
+
+.todayCell {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.level1 { background: var(--heat-1); border-color: transparent; }
+.level2 { background: var(--heat-2); border-color: transparent; }
+.level3 { background: var(--heat-3); border-color: transparent; }
+.level4 { background: var(--heat-4); border-color: transparent; }
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.legendBox {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--heat-0);
+  border: 1px solid var(--dot-border);
+}
+
+@media (max-width: 768px) {
+  .monthCalendarGrid {
+    grid-auto-rows: minmax(50px, 1fr);
+    gap: 4px;
+  }
+  .monthCell {
+    padding: 4px;
+    border-radius: 6px;
+  }
+  .monthCellCount {
+    font-size: 0.65rem;
+    padding: 1px 4px;
+  }
+}

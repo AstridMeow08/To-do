@@ -2,12 +2,14 @@ import { useState, useCallback } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import type { Habit, HabitFormData } from './types/habit';
 import { useHabits } from './hooks/useHabits';
+import { useTodos } from './hooks/useTodos';
 import { useToast } from './hooks/useToast';
 import { useTheme } from './hooks/useTheme';
 import { useNotifications } from './hooks/useNotifications';
 import { Header } from './components/Header';
 import { SummaryBar } from './components/SummaryBar';
 import { HabitsGrid } from './components/HabitsGrid';
+import { TodoList } from './components/TodoList';
 import { HabitModal } from './components/HabitModal';
 import { ReminderModal } from './components/ReminderModal';
 import { ConfirmModal } from './components/ConfirmModal';
@@ -18,10 +20,11 @@ import { UpdatePrompt } from './components/UpdatePrompt';
 import { todayKey, isHabitApplicableOnDate } from './utils/dateUtils';
 import './App.css';
 
-type View = 'habits' | 'dashboard';
+type View = 'habits' | 'todos' | 'dashboard';
 
 export default function App() {
   const { habits, addHabit, updateHabit, deleteHabit, toggleHabit, importHabits } = useHabits();
+  const { todos, addTodo, toggleTodo, deleteTodo, clearCompleted } = useTodos();
   const { message, type, visible, showToast } = useToast();
   const { theme, toggleTheme } = useTheme();
   const { activeReminder, dismissReminder } = useNotifications(habits);
@@ -145,6 +148,17 @@ export default function App() {
           Habits
         </button>
         <button
+          className={`nav-tab${view === 'todos' ? ' active' : ''}`}
+          onClick={() => setView('todos')}
+          aria-current={view === 'todos' ? 'page' : undefined}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          To-Dos
+        </button>
+        <button
           className={`nav-tab${view === 'dashboard' ? ' active' : ''}`}
           onClick={() => setView('dashboard')}
           aria-current={view === 'dashboard' ? 'page' : undefined}
@@ -169,6 +183,16 @@ export default function App() {
             onAdd={openAdd}
           />
         </>
+      )}
+
+      {view === 'todos' && (
+        <TodoList
+          todos={todos}
+          onAdd={addTodo}
+          onToggle={toggleTodo}
+          onDelete={deleteTodo}
+          onClearCompleted={clearCompleted}
+        />
       )}
 
       {view === 'dashboard' && <Dashboard habits={habits} />}
